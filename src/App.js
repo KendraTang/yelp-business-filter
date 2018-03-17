@@ -6,9 +6,13 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import BusinessCardList from './BusinessCardList'
 
+const endPoint = 'https://api.yelp.com/v3/graphql'
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://api.yelp.com/v3/graphql',
+    uri: `http://localhost:8080/${endPoint}`,
+    headers: {
+      'Accept-Language': 'en_US'
+    }
   }),
   cache: new InMemoryCache()
 })
