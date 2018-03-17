@@ -3,6 +3,7 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import moment from 'moment'
 
 import BusinessCardList from './BusinessCardList'
 
@@ -22,7 +23,7 @@ class App extends Component {
     super(props)
     this.state = {
       location: '',
-      datetime: '',
+      datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
     }
     this._handleChange = this._handleChange.bind(this)
   }
