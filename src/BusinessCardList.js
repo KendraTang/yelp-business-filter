@@ -12,9 +12,7 @@ import moment from 'moment'
 
 const getBusiness = gql`
   query getBusiness($location: String!) {
-    search(location: $location
-          sort_by: "rating"
-          limit: 50) {
+    search(location: $location, limit: 50) {
       business {
         id
         name
@@ -48,28 +46,49 @@ class BusinessCardList extends Component {
   _filterByDatetime(business) {
     if (!this.props.datetime) return true
     if (!business.hours || !business.hours[0]) return false
-    let datetime = moment(this.props.datetime)
-    return business.hours[0].open.reduce((s, x) => {
-      let weekday = x.day + 1 // Weekday of yelp starts from Monday while moment.js starts from Sunday
-      let startTime = moment(x.start, 'hmm').isoWeekday(weekday)
-      let endTime = moment(x.end, 'hmm').isoWeekday(weekday)
-      if (endTime < startTime) {
-        endTime.isoWeekday(weekday + 1)
+    let datetime = moment(this.props.datetime, 'YYYY-MM-DDTHH:mm:ss')
+    const convert = (s, day) =>
+      moment(s, 'HHmm')
+        .year(datetime.year())
+        .month(datetime.month())
+        .date(datetime.date())
+        .isoWeekday(day + 1)
+
+    return business.hours[0].open.some((x) => {
+      let startTime = convert(x.start, x.day)
+      let endTime = convert(x.end, x.day)
+      if (startTime.isAfter(datetime)) {
+        startTime.subtract(7, 'day')
+        endTime.subtract(7, 'day')
       }
-      return s || (datetime >= startTime && datetime <= endTime)
-    }, false)
+      if (endTime.isBefore(startTime) || x.is_overnight) {
+        endTime.add(1, 'day')
+      }
+      return datetime.isBetween(startTime, endTime)
+    })
   }
 
   render() {
     let { data: { loading, error, search } } = this.props
     if (loading) return <Loader active inline='centered' />
-    if (error) return <div>Oops, something went wrong :(</div>
+    if (error) {
+      if (error.message.includes('LOCATION_NOT_FOUND')) {
+        return (
+          <div>Sorry, location not found :(</div>
+        )
+      }
+      return <div>Oops, something went wrong :(</div>
+    }
+    let business = [...search.business].sort((a, b) => a.rating - b.rating).filter(this._filterByDatetime)
+    if (business.length === 0) {
+      return <div>No valid business :(</div>
+    }
     return (
       <Grid
         stackable
         columns={3}
       >
-        {search.business.filter(this._filterByDatetime).map((b) =>
+        {business.map((b) =>
           <Grid.Column
             key={b.id}
             stretched
