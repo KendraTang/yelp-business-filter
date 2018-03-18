@@ -4,9 +4,7 @@ import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 import {
   Card,
-  Container,
   Grid,
-  Header,
   Image,
   Loader,
 } from 'semantic-ui-react'
@@ -52,7 +50,7 @@ class BusinessCardList extends Component {
     if (!business.hours || !business.hours[0]) return false
     let datetime = moment(this.props.datetime)
     return business.hours[0].open.reduce((s, x) => {
-      let weekday = x.day + 1 // Weekday of yelp starts from Monday while  moment.js starts from Sunday
+      let weekday = x.day + 1 // Weekday of yelp starts from Monday while moment.js starts from Sunday
       let startTime = moment(x.start, 'hmm').isoWeekday(weekday)
       let endTime = moment(x.end, 'hmm').isoWeekday(weekday)
       if (endTime < startTime) {
@@ -62,10 +60,9 @@ class BusinessCardList extends Component {
     }, false)
   }
 
-  _content() {
-    let { data: { loading, error, search, variables } } = this.props
+  render() {
+    let { data: { loading, error, search } } = this.props
     if (loading) return <Loader active inline='centered' />
-    if (variables.location === '') return <Header as='h3' textAlign='center'>Try enter a location!</Header>
     if (error) return <div>Oops, something went wrong :(</div>
     return (
       <Grid
@@ -106,14 +103,6 @@ class BusinessCardList extends Component {
           </Grid.Column>
         )}
       </Grid>
-    )
-  }
-
-  render() {
-    return (
-      <Container className='business-card-list__container'>
-        {this._content()}
-      </Container>
     )
   }
 }

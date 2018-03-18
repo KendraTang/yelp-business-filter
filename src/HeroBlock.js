@@ -9,14 +9,15 @@ import {
   Menu,
   Visibility,
 } from 'semantic-ui-react'
+import moment from 'moment'
 
 class HeroBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
       fixed: false,
-      location: props.location,
-      datetime: props.datetime,
+      location: 'Taipei',
+      datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
     }
     this._hideFixedMenu = this._hideFixedMenu.bind(this)
     this._showFixedMenu = this._showFixedMenu.bind(this)
@@ -115,8 +116,6 @@ class HeroBlock extends Component {
 }
 
 HeroBlock.propTypes = {
-  datetime: PropTypes.string,
-  location: PropTypes.string,
   onSubmit: PropTypes.func,
 }
 

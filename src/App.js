@@ -4,9 +4,10 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import {
+  Container,
+  Header,
   Segment,
 } from 'semantic-ui-react'
-import moment from 'moment'
 
 import HeroBlock from './HeroBlock'
 import BusinessCardList from './BusinessCardList'
@@ -16,7 +17,7 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: `http://localhost:8080/${endPoint}`,
     headers: {
-      'Accept-Language': 'en_US'
+      'Accept-Language': 'zh_TW'
     }
   }),
   cache: new InMemoryCache(),
@@ -26,8 +27,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: '',
-      datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
+      location: null,
+      datetime: null,
     }
     this._updateQuery = this._updateQuery.bind(this)
   }
@@ -47,15 +48,17 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <div>
-          <HeroBlock
-            datetime={datetime}
-            location={location}
-            onSubmit={this._updateQuery}
-          />
-          <BusinessCardList
-            datetime={datetime}
-            location={location}
-          />
+          <HeroBlock onSubmit={this._updateQuery}/>
+          <Container className='business-card-list__container'>
+            {
+              location ?
+                <BusinessCardList
+                  datetime={datetime}
+                  location={location}
+                /> :
+                <Header as='h3' textAlign='center'>Try enter a location!</Header>
+            }
+          </Container>
           <Segment inverted vertical textAlign='center'>
             All rights reserved.
           </Segment>
