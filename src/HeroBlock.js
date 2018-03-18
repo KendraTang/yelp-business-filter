@@ -16,7 +16,7 @@ class HeroBlock extends Component {
     super(props)
     this.state = {
       fixed: false,
-      location: 'Taipei',
+      location: '',
       datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
     }
     this._hideFixedMenu = this._hideFixedMenu.bind(this)
@@ -32,9 +32,9 @@ class HeroBlock extends Component {
     this.setState({ fixed: true })
   }
 
-  _handleChange(e) {
+  _handleChange({ target: { name, value }}) {
     this.setState({
-      [e.target.name]: e.target.value
+      [name]: value
     })
   }
 
@@ -88,6 +88,7 @@ class HeroBlock extends Component {
                   type='text'
                   icon='search'
                   name='location'
+                  required
                   placeholder='Enter a location'
                   value={location}
                   onChange={this._handleChange}
@@ -97,6 +98,7 @@ class HeroBlock extends Component {
                 <Form.Input
                   type='datetime-local'
                   name='datetime'
+                  required
                   value={datetime}
                   onChange={this._handleChange}
                 />
