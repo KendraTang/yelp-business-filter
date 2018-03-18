@@ -3,6 +3,13 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import {
+  Container,
+  Form,
+  Header,
+  Icon,
+  Menu,
+} from 'semantic-ui-react'
 import moment from 'moment'
 
 import BusinessCardList from './BusinessCardList'
@@ -22,7 +29,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: '',
+      location: 'taipei',
       datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
     }
     this._handleChange = this._handleChange.bind(this)
@@ -39,22 +46,61 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <div>
-          <input
-            type='text'
-            name='location'
-            value={location}
-            onChange={this._handleChange}
-          />
-          <input
-            type='datetime-local'
-            name='datetime'
-            value={datetime}
-            onChange={this._handleChange}
-          />
-          <BusinessCardList
-            datetime={datetime}
-            location={location}
-          />
+          <Menu
+            stackable
+            inverted
+            fixed='top'
+            className='menu__transparent'
+          >
+            <Menu.Item>
+              <Icon name='yelp' size='big' />
+            </Menu.Item>
+            <Menu.Item
+              name='explore'
+              active={true}
+            >
+              <Icon name='rocket' />
+              Explore
+            </Menu.Item>
+          </Menu>
+          <div className='hero__block'>
+            <Container className='hero__container'>
+              <Header
+                as='h1'
+                inverted
+                content="Let's explore!"
+                className='hero__text'
+              />
+              <Form className='hero__form'>
+                <Form.Group>
+                  <Form.Input
+                    type='text'
+                    icon='search'
+                    placeholder='Enter a location'
+                    size='huge'
+                    value={location}
+                    onChange={this._handleChange}
+                  />
+                  <Form.Input
+                    type='datetime-local'
+                    size='huge'
+                    value={datetime}
+                    onChange={this._handleChange}
+                  />
+                  <Form.Button size='huge'>
+                    Get Started
+                    <Icon name='right arrow' />
+                  </Form.Button>
+                </Form.Group>
+              </Form>
+            </Container>
+          </div>
+          <Container text>
+            <BusinessCardList
+              datetime={datetime}
+              location={location}
+            />
+          </Container>
         </div>
       </ApolloProvider>
     )
