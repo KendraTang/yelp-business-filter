@@ -4,14 +4,11 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import {
-  Container,
-  Form,
-  Header,
-  Icon,
-  Menu,
+  Segment,
 } from 'semantic-ui-react'
 import moment from 'moment'
 
+import HeroBlock from './HeroBlock'
 import BusinessCardList from './BusinessCardList'
 
 const endPoint = 'https://api.yelp.com/v3/graphql'
@@ -22,85 +19,46 @@ const client = new ApolloClient({
       'Accept-Language': 'en_US'
     }
   }),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 })
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: 'taipei',
+      location: '',
       datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
     }
-    this._handleChange = this._handleChange.bind(this)
+    this._updateQuery = this._updateQuery.bind(this)
   }
 
-  _handleChange(e) {
+  _updateQuery(location, datetime) {
     this.setState({
-      [e.target.name]: e.target.value
+      location,
+      datetime,
     })
   }
 
   render() {
-    let { datetime, location } = this.state
+    let {
+      datetime,
+      location,
+    } = this.state
     return (
       <ApolloProvider client={client}>
         <div>
-          <Menu
-            stackable
-            inverted
-            fixed='top'
-            className='menu__transparent'
-          >
-            <Menu.Item>
-              <Icon name='yelp' size='big' />
-            </Menu.Item>
-            <Menu.Item
-              name='explore'
-              active={true}
-            >
-              <Icon name='rocket' />
-              Explore
-            </Menu.Item>
-          </Menu>
-          <div className='hero__block'>
-            <Container className='hero__container'>
-              <Header
-                as='h1'
-                inverted
-                content="Let's explore!"
-                className='hero__text'
-              />
-              <Form className='hero__form'>
-                <Form.Group>
-                  <Form.Input
-                    type='text'
-                    icon='search'
-                    placeholder='Enter a location'
-                    size='huge'
-                    value={location}
-                    onChange={this._handleChange}
-                  />
-                  <Form.Input
-                    type='datetime-local'
-                    size='huge'
-                    value={datetime}
-                    onChange={this._handleChange}
-                  />
-                  <Form.Button size='huge'>
-                    Get Started
-                    <Icon name='right arrow' />
-                  </Form.Button>
-                </Form.Group>
-              </Form>
-            </Container>
-          </div>
-          <Container text>
-            <BusinessCardList
-              datetime={datetime}
-              location={location}
-            />
-          </Container>
+          <HeroBlock
+            datetime={datetime}
+            location={location}
+            onSubmit={this._updateQuery}
+          />
+          <BusinessCardList
+            datetime={datetime}
+            location={location}
+          />
+          <Segment inverted vertical textAlign='center'>
+            All rights reserved.
+          </Segment>
         </div>
       </ApolloProvider>
     )

@@ -4,7 +4,9 @@ import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 import {
   Card,
+  Container,
   Grid,
+  Header,
   Image,
   Loader,
 } from 'semantic-ui-react'
@@ -55,20 +57,27 @@ class BusinessCardList extends Component {
     }, false)
   }
 
-  render() {
+  _content() {
     let { data: { loading, error, search, variables } } = this.props
-    if (loading) return <Loader inverted>Loading</Loader>
-    if (variables.location === '') return <div>Enter a location!</div>
+    if (loading) return <Loader active inline='centered' />
+    if (variables.location === '') return <Header as='h3' textAlign='center'>Try enter a location!</Header>
     if (error) return <div>Oops, something went wrong :(</div>
     return (
-      <Grid columns={2} className='business-card-list__container'>
+      <Grid
+        stackable
+        columns={3}
+      >
         {search.business.filter(this._filterByDatetime).map((b) =>
-          <Grid.Column key={b.id}>
+          <Grid.Column
+            key={b.id}
+            stretched
+          >
             <Card
               href={b.url}
               className='card'
+              fluid
             >
-              <Image src={b.photos}  />
+              <Image src={b.photos} />
               <Card.Content>
                 <Card.Header>
                   {b.name}
@@ -80,13 +89,21 @@ class BusinessCardList extends Component {
                   </span>
                 </Card.Meta>
                 <Card.Description>
-                  Matthew is a musician living in Nashville.
+                      Matthew is a musician living in Nashville.
                 </Card.Description>
               </Card.Content>
             </Card>
           </Grid.Column>
         )}
       </Grid>
+    )
+  }
+
+  render() {
+    return (
+      <Container className='business-card-list__container'>
+        {this._content()}
+      </Container>
     )
   }
 }

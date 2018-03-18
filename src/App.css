@@ -1,12 +1,15 @@
-.ui.inverted.menu__transparent {
+.ui.inverted.header__menu {
   background: transparent;
+}
+.ui.inverted.fixed.header__menu {
+  background: linear-gradient(312deg, #ff0032 0%, #fa1848 35%, #ffb270 100%);
 }
 
 .hero__block {
   background: linear-gradient(312deg, #ff0032 0%, #fa1848 35%, #ffb270 100%);
 }
 .hero__container {
-  padding: 15em 5em;
+  padding: 15em 0;
 }
 .hero__block .ui.hero__text {
   font-size: 4em;
@@ -19,8 +22,10 @@
 
 .ui.business-card-list__container {
   margin: 5em 0;
+  min-height: 300px;
 }
 
 .ui.business-card-list__container .image {
   height: 200px;
+  object-fit: cover;
 }
