@@ -14,7 +14,9 @@ import moment from 'moment'
 
 const getBusiness = gql`
   query getBusiness($location: String!) {
-    search(location: $location) {
+    search(location: $location
+          sort_by: "rating"
+          limit: 50) {
       business {
         id
         name
@@ -31,6 +33,9 @@ const getBusiness = gql`
         rating
         price
         photos
+        location {
+          formatted_address
+        }
       }
     }
   }
@@ -82,14 +87,19 @@ class BusinessCardList extends Component {
                 <Card.Header>
                   {b.name}
                 </Card.Header>
-                <Card.Meta>
-                  {b.rating}
-                  <span className='gray'>
+                <Card.Meta >
+                  <span className='price'>
+                    {b.price}
+                  </span>
+                  <span className='rating'>
+                    {b.rating}
+                  </span>
+                  <span className='review__count'>
                     {b.review_count} reviews
                   </span>
                 </Card.Meta>
                 <Card.Description>
-                      Matthew is a musician living in Nashville.
+                  {b.location.formatted_address}
                 </Card.Description>
               </Card.Content>
             </Card>
