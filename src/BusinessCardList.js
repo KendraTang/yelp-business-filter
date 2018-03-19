@@ -5,10 +5,10 @@ import { graphql } from 'react-apollo'
 import {
   Card,
   Grid,
-  Icon,
   Image,
   Label,
   Loader,
+  Rating,
 } from 'semantic-ui-react'
 import moment from 'moment'
 
@@ -64,24 +64,14 @@ class BusinessCardList extends Component {
       let startTime = convert(x.start, x.day)
       let endTime = convert(x.end, x.day)
       if (startTime.isAfter(datetime)) {
-        startTime.subtract(7, 'day')
-        endTime.subtract(7, 'day')
+        startTime.subtract(1, 'week')
+        endTime.subtract(1, 'week')
       }
       if (endTime.isBefore(startTime) || x.is_overnight) {
         endTime.add(1, 'day')
       }
       return datetime.isBetween(startTime, endTime)
     })
-  }
-
-  _renderStars(rating) {
-    let stars = []
-    for (let i = 0; i < rating; i++)
-      stars.push(<Icon name='star' key={`rating${i}`} />)
-    if (rating % 1 !== 0) {
-      stars.push(<Icon name='star half empty' key='rating.5' />)
-    }
-    return stars
   }
 
   render() {
@@ -95,7 +85,7 @@ class BusinessCardList extends Component {
       }
       return <div>Oops, something went wrong :(</div>
     }
-    let business = [...search.business].sort((a, b) => a.rating - b.rating).filter(this._filterByDatetime)
+    let business = [...search.business].sort((a, b) => b.rating - a.rating).filter(this._filterByDatetime)
     if (business.length === 0) {
       return <div>No valid business :(</div>
     }
@@ -123,7 +113,7 @@ class BusinessCardList extends Component {
                     {b.price}
                   </span>
                   <span className='rating'>
-                    {this._renderStars(b.rating)}
+                    <Rating icon='star' disabled rating={Math.round(b.rating)} maxRating={5} />
                   </span>
                   <span className='review__count'>
                     {b.review_count} reviews
