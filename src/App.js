@@ -13,9 +13,12 @@ import HeroBlock from './HeroBlock'
 import BusinessCardList from './BusinessCardList'
 
 const endPoint = 'https://api.yelp.com/v3/graphql'
+const APIProxy = process.env.NODE_ENV === 'production' ?
+  'http://yelp-api-proxy.tkain.tw' :
+  'http://localhost:8080'
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: `http://localhost:8080/${endPoint}`,
+    uri: `${APIProxy}/${endPoint}`,
     headers: {
       'Accept-Language': 'zh_TW'
     }
