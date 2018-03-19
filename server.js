@@ -6,7 +6,7 @@ var port = process.env.PORT || 8080
 var cors_proxy = require('cors-anywhere')
 const token = process.env.TOKEN
 cors_proxy.createServer({
-  originWhitelist: [], // Allow all origins
+  originWhitelist: ['http://13.230.24.34', 'http://localhost:3000'], // Allow all origins
   corsMaxAge: 600,
   setHeaders: {
     authorization: `Bearer ${token}`
