@@ -17,7 +17,7 @@ class HeroBlock extends Component {
     this.state = {
       fixed: false,
       location: '',
-      datetime: moment().format('YYYY-MM-DDTHH:mm:ss'),
+      datetime: moment().format('YYYY-MM-DDTHH:mm'),
     }
     this._hideFixedMenu = this._hideFixedMenu.bind(this)
     this._showFixedMenu = this._showFixedMenu.bind(this)

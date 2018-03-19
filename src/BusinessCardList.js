@@ -5,7 +5,9 @@ import { graphql } from 'react-apollo'
 import {
   Card,
   Grid,
+  Icon,
   Image,
+  Label,
   Loader,
 } from 'semantic-ui-react'
 import moment from 'moment'
@@ -32,6 +34,10 @@ const getBusiness = gql`
         location {
           formatted_address
         }
+        categories {
+          title
+          alias
+        }
       }
     }
   }
@@ -46,7 +52,7 @@ class BusinessCardList extends Component {
   _filterByDatetime(business) {
     if (!this.props.datetime) return true
     if (!business.hours || !business.hours[0]) return false
-    let datetime = moment(this.props.datetime, 'YYYY-MM-DDTHH:mm:ss')
+    let datetime = moment(this.props.datetime, 'YYYY-MM-DDTHH:mm')
     const convert = (s, day) =>
       moment(s, 'HHmm')
         .year(datetime.year())
@@ -66,6 +72,16 @@ class BusinessCardList extends Component {
       }
       return datetime.isBetween(startTime, endTime)
     })
+  }
+
+  _renderStars(rating) {
+    let stars = []
+    for (let i = 0; i < rating; i++)
+      stars.push(<Icon name='star' key={`rating${i}`} />)
+    if (rating % 1 !== 0) {
+      stars.push(<Icon name='star half empty' key='rating.5' />)
+    }
+    return stars
   }
 
   render() {
@@ -94,28 +110,39 @@ class BusinessCardList extends Component {
             stretched
           >
             <Card
-              href={b.url}
               className='card'
               fluid
             >
               <Image src={b.photos} />
               <Card.Content>
-                <Card.Header>
+                <Card.Header href={b.url}>
                   {b.name}
                 </Card.Header>
-                <Card.Meta >
+                <Card.Meta>
                   <span className='price'>
                     {b.price}
                   </span>
                   <span className='rating'>
-                    {b.rating}
+                    {this._renderStars(b.rating)}
                   </span>
                   <span className='review__count'>
                     {b.review_count} reviews
                   </span>
+                  <div>
+                    {b.categories.map((c) => (
+                      <Label circular={true} key={c.alias}>{c.title}</Label>
+                    ))}
+                  </div>
                 </Card.Meta>
                 <Card.Description>
                   {b.location.formatted_address}
+                  <ul>
+                    {b.hours && b.hours[0].open.map((time) => (
+                      <li key={`${time.day}-${time.start}-${time.end}`}>
+                        {time.day}: {time.start} - {time.end}
+                      </li>
+                    ))}
+                  </ul>
                 </Card.Description>
               </Card.Content>
             </Card>
