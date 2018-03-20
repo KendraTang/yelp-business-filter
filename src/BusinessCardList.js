@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 import {
-  Card,
   Grid,
-  Image,
-  Label,
   Loader,
-  Rating,
 } from 'semantic-ui-react'
 import moment from 'moment'
+
+import BusinessCard from './BusinessCard'
 
 const getBusiness = gql`
   query getBusiness($location: String!) {
@@ -31,6 +29,7 @@ const getBusiness = gql`
         rating
         price
         photos
+        display_phone
         location {
           formatted_address
         }
@@ -99,43 +98,7 @@ class BusinessCardList extends Component {
             key={b.id}
             stretched
           >
-            <Card
-              className='card'
-              fluid
-            >
-              <Image src={b.photos} />
-              <Card.Content>
-                <Card.Header href={b.url}>
-                  {b.name}
-                </Card.Header>
-                <Card.Meta>
-                  <span className='price'>
-                    {b.price}
-                  </span>
-                  <span className='rating'>
-                    <Rating icon='star' disabled rating={Math.round(b.rating)} maxRating={5} />
-                  </span>
-                  <span className='review__count'>
-                    {b.review_count} reviews
-                  </span>
-                  <div>
-                    {b.categories.map((c) => (
-                      <Label circular={true} key={c.alias}>{c.title}</Label>
-                    ))}
-                  </div>
-                </Card.Meta>
-                <Card.Description>
-                  {b.location.formatted_address}
-                  <ul>
-                    {b.hours && b.hours[0].open.map((time) => (
-                      <li key={`${time.day}-${time.start}-${time.end}`}>
-                        {time.day}: {time.start} - {time.end}
-                      </li>
-                    ))}
-                  </ul>
-                </Card.Description>
-              </Card.Content>
-            </Card>
+            <BusinessCard {...b} />
           </Grid.Column>
         )}
       </Grid>
