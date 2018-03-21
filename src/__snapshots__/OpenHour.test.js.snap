@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`all day 1`] = `
+<div>
+  星期
+  一
+   
+  全日營業
+</div>
+`;
+
+exports[`basic 1`] = `
+<div>
+  星期
+  一
+   
+  17:30 ~ 22:00
+</div>
+`;
+
+exports[`multiple hours in one day 1`] = `
+<div>
+  星期
+  一
+   
+  06:00 ~ 09:00, 11:00 ~ 14:30, 17:30 ~ 22:00
+</div>
+`;
+
+exports[`overnight 1`] = `
+<div>
+  星期
+  一
+   
+  23:00 ~ 02:00
+</div>
+`;
+
+exports[`weekday names 1`] = `
+<div>
+  星期
+  一
+   
+  11:00 ~ 21:00
+</div>
+`;
+
+exports[`weekday names 2`] = `
+<div>
+  星期
+  二
+   
+  11:00 ~ 21:00
+</div>
+`;
+
+exports[`weekday names 3`] = `
+<div>
+  星期
+  三
+   
+  11:00 ~ 21:00
+</div>
+`;
+
+exports[`weekday names 4`] = `
+<div>
+  星期
+  四
+   
+  11:00 ~ 21:00
+</div>
+`;
+
+exports[`weekday names 5`] = `
+<div>
+  星期
+  五
+   
+  11:00 ~ 21:00
+</div>
+`;
+
+exports[`weekday names 6`] = `
+<div>
+  星期
+  六
+   
+  11:00 ~ 21:00
+</div>
+`;
+
+exports[`weekday names 7`] = `
+<div>
+  星期
+  日
+   
+  11:00 ~ 21:00
+</div>
+`;

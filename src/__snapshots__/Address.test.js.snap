@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Format address 1`] = `
+Array [
+  "104 台北市中山區",
+  <br />,
+  "民族東路 410 巷 2 弄 18 號",
+]
+`;
