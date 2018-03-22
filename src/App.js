@@ -15,7 +15,7 @@ import BusinessCardList from './components/BusinessCardList'
 const endPoint = 'https://api.yelp.com/v3/graphql'
 const APIProxy = process.env.NODE_ENV === 'production' ?
   'https://yelp-api-proxy.tkain.tw' :
-  'http://localhost:8080'
+  `http://localhost:${process.env.PORT || 8080}`
 const client = new ApolloClient({
   link: new HttpLink({
     uri: `${APIProxy}/${endPoint}`,
