@@ -8,7 +8,7 @@ import {
 } from 'semantic-ui-react'
 
 import BusinessCard from './BusinessCard'
-import { isOpenAt } from './utils'
+import { isOpenAt } from '../utils'
 
 const getBusiness = gql`
   query getBusiness($location: String!) {

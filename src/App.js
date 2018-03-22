@@ -9,8 +9,8 @@ import {
   Segment,
 } from 'semantic-ui-react'
 
-import HeroBlock from './HeroBlock'
-import BusinessCardList from './BusinessCardList'
+import HeroBlock from './components/HeroBlock'
+import BusinessCardList from './components/BusinessCardList'
 
 const endPoint = 'https://api.yelp.com/v3/graphql'
 const APIProxy = process.env.NODE_ENV === 'production' ?
