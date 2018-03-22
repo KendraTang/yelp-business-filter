@@ -1,16 +1,18 @@
-// Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '0.0.0.0'
-// Listen on a specific port via the PORT environment variable
-var port = process.env.PORT || 8080
+const host = process.env.HOST || '0.0.0.0'
+const port = process.env.PORT || 8080
 
-var cors_proxy = require('cors-anywhere')
-const token = process.env.TOKEN
-cors_proxy.createServer({
-  originWhitelist: ['https://yelp.tkain.tw', 'http://localhost:3000'], // Allow all origins
+const apiKey = process.env.API_KEY
+if (!apiKey) {
+  console.log('Please set your API_KEY in environment variable.')
+  process.exit(1)
+}
+
+require('cors-anywhere').createServer({
+  originWhitelist: ['https://yelp.tkain.tw', 'http://localhost:3000'],
   corsMaxAge: 600,
   setHeaders: {
-    authorization: `Bearer ${token}`
+    authorization: `Bearer ${apiKey}`
   }
-}).listen(port, host, function() {
-  console.log('Running CORS Anywhere on ' + host + ':' + port)
+}).listen(port, host, () => {
+  console.log(`Running CORS Anywhere on ${host}:${port}.`)
 })
