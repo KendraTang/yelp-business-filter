@@ -18,10 +18,10 @@ export const isOpenAt = (hours, datetime) => {
         startTime.subtract(1, 'week')
         endTime.subtract(1, 'week')
       }
-      if (endTime.isBefore(startTime) || is_overnight) {
+      if (endTime.isSameOrBefore(startTime) || is_overnight) {
         endTime.add(1, 'day')
       }
-      return datetime.isBetween(startTime, endTime)
+      return datetime.isBetween(startTime, endTime, 'minute', '[)')
     })
   )
 }
