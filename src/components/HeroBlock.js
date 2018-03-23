@@ -46,7 +46,7 @@ class HeroBlock extends Component {
       location,
     } = this.state
     return (
-      <div className='hero__block'>
+      <div className='hero'>
         <Visibility once={false} onBottomPassed={this._showFixedMenu} onBottomPassedReverse={this._hideFixedMenu}>
           <Menu
             fixed={fixed ? 'top' : null}

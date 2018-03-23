@@ -1,35 +1,42 @@
-.ui.inverted.header__menu {
-  background: transparent;
-}
-.ui.inverted.fixed.header__menu {
-  background: linear-gradient(312deg, #ff0032 0%, #fa1848 35%, #ffb270 100%);
+$header-gradients: linear-gradient(312deg, #ff0032 0%, #fa1848 35%, #ffb270 100%);
+$header-height: 54px;
+$hero-block-height: 450px;
+$footer-height: 47px;
+
+.ui.inverted {
+  &.header__menu {
+    background: transparent;
+  }
+  &.fixed.header__menu {
+    background: $header-gradients;
+  }
 }
 
-.hero__block {
-  background: linear-gradient(312deg, #ff0032 0%, #fa1848 35%, #ffb270 100%);
-}
-.hero__container {
-  padding: 15em 0;
-}
-.hero__block .ui.hero__text {
-  font-size: 4em;
-  font-weight: normal;
-}
-
-.hero__block .ui.hero__form {
-  margin-top: 3em;
+.hero {
+  background: $header-gradients;
+  .hero__container {
+    height: $hero-block-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .ui.hero__text {
+    font-size: 4em;
+    font-weight: normal;
+  }
+  .ui.hero__form {
+    margin-top: 3em;
+  }
 }
 
 .ui.business-card-list__container {
-  margin: 5em 0;
-  min-height: 300px;
-}
-
-.ui.business-card-list__container .image {
-  height: 200px;
-  object-fit: cover;
-}
-
-.review__count {
-  margin-left: 5px;
+  padding: 5em 0;
+  min-height: calc(100vh - #{$header-height + $hero-block-height + $footer-height});
+  .image {
+    height: 200px;
+    object-fit: cover;
+  }
+  .review__count {
+    margin-left: 5px;
+  }
 }
