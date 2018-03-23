@@ -31,10 +31,13 @@ And then visit http://localhost:3000, Voila!
     CORS Anywhere is very simple to setup.
 
 * [react-app-rewired](https://github.com/timarney/react-app-rewired)
-    Used to add loaders without eject, which may cause the project to be too complicated.
+    Used to add loaders without ejecting which may cause the project to be too messy.
 
 * Semantic UI ([semantic-ui-react](https://github.com/Semantic-Org/Semantic-UI-React))
     For quick and simple UI layout.
+
+* [Moment.js](https://momentjs.com/)
+    We need to compare open day with selected datetime. It requires some datetime manipulation. Moment.js is good at this.
 
 ## How did you decide the requests to Yelp API?
 
@@ -53,6 +56,7 @@ For example, search with `term: "ramen", location: "台北"` is ok but `term: "�
 * Filter by other dimensions
 * Click to show more businesses
 * Show result in other page?
+* Find a better way to fix footer at bottom
 
 ## What would you do differently if you were allocated more time?
 
