@@ -6,11 +6,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import {
   Container,
   Header,
-  Segment,
 } from 'semantic-ui-react'
 
 import HeroBlock from './components/HeroBlock'
 import BusinessCardList from './components/BusinessCardList'
+import Footer from './components/Footer'
 
 const endPoint = 'https://api.yelp.com/v3/graphql'
 const APIProxy = process.env.NODE_ENV === 'production' ?
@@ -62,9 +62,7 @@ class App extends Component {
                 <Header as='h3' textAlign='center'>Try enter a location!</Header>
             }
           </Container>
-          <Segment inverted vertical textAlign='center'>
-            All rights reserved.
-          </Segment>
+          <Footer />
         </div>
       </ApolloProvider>
     )
