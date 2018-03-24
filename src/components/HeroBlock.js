@@ -86,7 +86,7 @@ class HeroBlock extends Component {
               <Grid.Column>
                 <Form.Input
                   type='text'
-                  icon='search'
+                  icon='map marker alternate'
                   name='location'
                   required
                   placeholder='Enter a location'
