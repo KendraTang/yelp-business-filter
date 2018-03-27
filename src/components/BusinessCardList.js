@@ -12,7 +12,9 @@ import { isOpenAt } from '../utils'
 
 const getBusiness = gql`
   query getBusiness($location: String!) {
-    search(location: $location, limit: 50) {
+    search(term: "restaurant",
+            location: $location,
+            limit: 50) {
       business {
         id
         name
